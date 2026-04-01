@@ -44,17 +44,25 @@ getBBox (bbox, _) = bbox
 - Aqui ele pega a tupla (ou tuplas) que resultou das comparações e testes e remove a classe, retornando apenas as bounding boxes.
 
 ## Com as Auxiliares prontas estava tudo pronto para a função principal.
-- É nesse ponto que o **zip** se torna muito util, pois transformará essas listas recebidas em uma tupla para que elas sejam usadas como parametro e .
+- É nesse ponto que o **zip** se torna muito util, pois transformará essas listas recebidas em uma tupla para que elas possam ser usadas como parametro e alteradas.
 - Exemplo visual:
 
 
 <img width="343" height="149" alt="image" src="https://github.com/user-attachments/assets/4176afa3-addd-448f-a3c5-5a6474840eef" />
 
 
+Dessa forma a função principal ficou desenvolvida assim:
+```hs
+selectBoundingBoxesForClass target bboxes cls = 
+    map getBBox (filter (isCorrectClass target) (zip bboxes cls))
+```
+- A primeira coisa que acontece nessa função é o **zip** que junta as Bounding Boxes recebidas com as Classes formando tuplas.
+- Depois disso o a função isCorrectClass vai comparar o targetClass com a Class das tuplas e com o uso do filter vai filtrar apenas as tuplas que tem a classe escolhida.
+- Por ultimo, utilizei um map na função auxiliar que fiz getBBox que tira a parte das classes deixando apenas as Bounding Boxes correspondentes finalizando o exercicio.
 
-
-
-
+Nessa função principal uma das **dificuldades** que tive para monta-la foi na parte de juntar o filter da auxiliar isCorrectClass com as listas. O zip resolveu isso pois transforma listas em uma tupla que é lida como uma lista só, que funciona no filter, por isso o zip precisa ser o primeiro a ser feito na função.
 
 ### Referências
+https://github.com/AndreaInfUFSM/elc117-2026a
+
 http://www.zvon.org/other/haskell/Outputprelude/zip_f.html
